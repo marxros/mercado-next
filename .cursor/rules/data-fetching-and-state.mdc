@@ -1,0 +1,26 @@
+---
+description: Data fetching, caching and state management guidance
+globs: *.ts,*.tsx
+---
+## Data Fetching and State
+
+- **Server-first**: Fetch data in Server Components or Route Handlers (`app/api/*`).
+- **Revalidation**: Use `fetch(..., { next: { revalidate } })` or `export const revalidate` per route.
+- **Dynamic rendering**: For request-time fetches, set `export const dynamic = "force-dynamic"`.
+- **Edge vs Node**: Prefer `export const runtime = "edge"` for low-latency reads where compatible.
+
+### React Query (Client)
+
+- Use `@tanstack/react-query` only within Client Components.
+- Provide a `QueryClientProvider` in a client `Providers` component registered in `app/layout.tsx`.
+- Hydrate with `HydrationBoundary` when prefetching on server.
+
+### Forms and Mutations
+
+- Prefer Server Actions for secure mutations. Validate with `zod`.
+- For client-only flows, use React Query `useMutation` and optimistic updates.
+
+### Validation
+
+- Validate all external data with `zod`. Narrow types at boundaries.
+

@@ -1,0 +1,43 @@
+---
+alwaysApply: true
+---
+## Next.js Standards and Conventions
+
+- **Framework**: Next.js App Router (`app/`), React 19, TypeScript strict.
+- **Styling**: Tailwind CSS v4. Use `app/globals.css` for base layers. Avoid inline styles unless trivial.
+- **Components**: Prefer Server Components by default. Opt-in to Client Components with `"use client"` only when needed (state, effects, browser APIs, event handlers, context providers).
+- **File Naming**: Use expressive names aligned to domain. Co-locate component, styles, tests when sensible.
+- **Structure**:
+  - `app/` pages, layouts, loading, error boundaries
+  - `src/components/` reusable UI
+  - `src/modules/` feature modules (domain-specific)
+  - `src/shared/` lib, utils, config, schemas
+  - `src/server/` server-only code (actions, services, repositories)
+- **Imports**: Use absolute imports via `tsconfig.json` paths; avoid long relative chains.
+- **Error Handling**: Use `error.tsx` at route level; never leak sensitive info. Log via a centralized logger.
+- **Accessibility**: Prefer semantic HTML, ARIA where appropriate, keyboard navigation.
+
+## Client vs Server Guidance
+
+- Use Server Components for data fetching and composition.
+- Use Client Components for interactive UI with hooks, forms, local state.
+- Cross boundary via props. Avoid passing functions from client to server.
+- Mark server-only code with `"server-only"` to prevent client bundling.
+
+## API and Data
+
+- Prefer server-side data (fetch in Server Components or Route Handlers).
+- Use `@tanstack/react-query` only inside Client Components when client-side cache is needed.
+- Validate inputs with `zod`. Sanitize user data before render.
+
+## Security
+
+- Read secrets from env in server context only. Never expose server env to client.
+- Apply CORS, rate limiting and avoid returning stack traces.
+- Avoid dangerouslySetInnerHTML unless sanitized.
+
+## Testing
+
+- Add unit tests for shared utils and components.
+- Add integration tests for route handlers.
+

@@ -1,0 +1,22 @@
+---
+description: UI stack guidance (Tailwind v4, shadcn/ui, Radix)
+globs: *.ts,*.tsx,*.css
+---
+## UI Stack
+
+- **Tailwind v4**: Use utility-first classes; prefer composition over ad-hoc CSS. Keep global layers in `app/globals.css`. Respect design tokens.
+- **shadcn/ui**: Co-locate components under `src/components/ui`. Use generator aligned to Tailwind v4 variants. Keep components framework-agnostic (no data fetching inside UI components).
+- **Radix UI**: Accessible primitives for complex widgets. Wrap with project-specific styles in `src/components/ui/*`.
+- **Icons**: Use `lucide-react`.
+- **Animation**: Use `tailwindcss-animate` where needed.
+
+## Theming
+
+- Use `next-themes` in a Client Provider, registered in `app/layout.tsx`.
+- Persist theme via `localStorage` (default provided by `next-themes`).
+
+## CSS
+
+- Avoid component-level CSS files. Prefer Tailwind classes and `@layer` in `globals.css`.
+- Use `clsx` and `tailwind-merge` for class merging.
+

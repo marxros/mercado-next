@@ -1,0 +1,16 @@
+---
+description: Env vars and public assets migration guidance
+---
+## Environment Variables
+
+- Copy required entries from `connect-alagoas/.env` to `mercado-next/.env.local`.
+- Use `NEXT_PUBLIC_` prefix for variables needed on the client. Others remain server-only.
+- Access server env via `process.env.MY_VAR` in server contexts only. Do not import env into Client Components.
+- Document required vars in `.env.example`.
+
+## Public Assets
+
+- Copy `connect-alagoas/public/**` into `mercado-next/public/**`.
+- Reference assets with root-relative paths (e.g., `/placeholder.svg`).
+- Prefer `next/image` for images to leverage optimization.
+

@@ -1,0 +1,33 @@
+---
+description: Concise Vite -> Next.js migration checklist
+---
+## Migration Checklist (connect-alagoas → mercado-next)
+
+1) Dependencies
+   - Install: `@tanstack/react-query`, `zod`, `clsx`, `tailwind-merge`, `next-themes`, `lucide-react`, `tailwindcss-animate`.
+   - Remove: `react-router-dom` usage.
+
+2) Tailwind
+   - Ensure Tailwind v4 configured in `postcss` and `globals.css`.
+
+3) Routing
+   - Map `src/pages/**` to `app/**/page.tsx`.
+   - Create `layout.tsx`, `loading.tsx`, `error.tsx` where needed.
+
+4) Providers
+   - Create client `Providers` with Theme + React Query. Mount in `app/layout.tsx`.
+
+5) Data
+   - Move API calls to Server Components or Route Handlers. Add revalidation.
+
+6) Env & Assets
+   - Port `.env` to `.env.local` with `NEXT_PUBLIC_` for client vars.
+   - Copy `public/**`.
+
+7) Cleanup
+   - Delete `main.tsx`, `App.tsx` equivalents.
+   - Replace `Link`/`useNavigate` with `next/link` and `next/navigation`.
+
+8) QA
+   - Lint, typecheck, and run app. Verify routes, theme, data flows.
+

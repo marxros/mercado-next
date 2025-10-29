@@ -1,0 +1,45 @@
+---
+description: Mapping Vite (connect-alagoas) to Next.js App Router
+globs: *.ts,*.tsx
+---
+## Routing and File Mapping (Vite -> Next.js)
+
+Source app: `connect-alagoas` (Vite, React Router) → Target app: `mercado-next` (Next.js App Router)
+
+### Router Mapping
+
+- Replace `react-router-dom` routes with filesystem routes under `app/`.
+- Index route → `app/page.tsx`.
+- Nested route `/foo/bar` → `app/foo/bar/page.tsx`.
+- Dynamic route `/users/:id` → `app/users/[id]/page.tsx`.
+- Catch-all `/docs/*` → `app/docs/[...slug]/page.tsx`.
+- Layout equivalents → `app/(segment)/layout.tsx` as needed.
+
+### File Movement
+
+- `src/pages/**` (Vite) → corresponding `app/**/page.tsx`.
+- `src/components/**` → `src/components/**` (reused). Convert to Server/Client as needed.
+- `src/contexts/**` → Client components or `providers` and wrap in `app/layout.tsx`.
+- `src/hooks/**` → keep; ensure client-only hooks remain in Client components.
+- `src/lib/**` → `src/shared/**` or `src/server/**` (server-only modules must not import react).
+- Entry files `main.tsx`/`App.tsx` are replaced by `app/layout.tsx` and route pages.
+
+### Assets and Public
+
+- `public/**` → copy to `mercado-next/public/**`. Paths remain rooted at `/`.
+- Static imports (e.g., images) can continue via `next/image` where beneficial.
+
+### Navigation
+
+- Replace `Link` from `react-router-dom` with `next/link`.
+- Replace `useNavigate` with `useRouter` from `next/navigation`.
+
+### Loaders and Suspense
+
+- Use `loading.tsx` for route-level pending UI.
+- Use `error.tsx` for per-route error boundaries.
+
+### Metadata
+
+- Move `<head>` elements to `export const metadata` in route files or `app/layout.tsx`.
+
